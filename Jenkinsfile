@@ -1,10 +1,16 @@
 pipeline {
     agent any
+
+    parameters([
+        string(name: 'gitUrl', defaultValue: ''),
+        string(name: 'projectKey', defaultValue: ''),
+        string(name: 'projectToken', defaultValue: '')
+    ])
    
     stages{
         stage('Checkout'){
             steps {
-		        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: $gitUrl]]])
+		        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: ${params.gitUrl}]]])
             }
         }
         
@@ -12,11 +18,11 @@ pipeline {
    	        steps {
                 script {
                     sh '''/var/lib/jenkins/sonar-scanner/bin/sonar-scanner \
-                    -Dsonar.projectKey=$projectKey \
+                    -Dsonar.projectKey=${params.projectKey} \
                     -Dsonar.sources=. \
                     -Dsonar.css.node=. \
                     -Dsonar.host.url=http://192.168.1.112:9000\
-                    -Dsonar.login=$projectToken'''
+                    -Dsonar.login=${params.projectToken}'''
                 }
        		}
 	    }
