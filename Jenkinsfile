@@ -8,12 +8,6 @@ pipeline {
     }
    
     stages{
-        stage('Checkout'){
-            steps {
-		        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: ${params.gitUrl}]]])
-            }
-        }
-
         stage('Static Analysis with SonarQube') {
    	        steps {
                 script {
