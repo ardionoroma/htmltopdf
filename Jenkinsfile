@@ -1,19 +1,12 @@
 pipeline {
     agent any
 
-    parameters([
-        string(name: 'gitUrl', defaultValue: ''),
-        string(name: 'projectKey', defaultValue: ''),
+    parameters {
+        string(name: 'projectKey', defaultValue: '')
         string(name: 'projectToken', defaultValue: '')
-    ])
+    }
    
     stages{
-        stage('Checkout'){
-            steps {
-		        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: ${params.gitUrl}]]])
-            }
-        }
-        
         stage('Static Analysis with SonarQube') {
    	        steps {
                 script {
