@@ -10,12 +10,12 @@ pipeline {
         stage('Static Analysis with SonarQube') {
    	        steps {
                 script {
-                    sh '''/var/lib/jenkins/sonar-scanner/bin/sonar-scanner \
+                    sh """/var/lib/jenkins/sonar-scanner/bin/sonar-scanner \
                     -Dsonar.projectKey=${params.projectKey} \
                     -Dsonar.sources=. \
                     -Dsonar.css.node=. \
                     -Dsonar.host.url=http://192.168.1.112:9000\
-                    -Dsonar.login=${params.projectToken}'''
+                    -Dsonar.login=${params.projectToken}"""
                 }
        		}
 	    }
